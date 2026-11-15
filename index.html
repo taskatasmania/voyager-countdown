@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voyager 1 - One Light-Day</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(ellipse at center, #172b48 0%, #080f1e 65%, #030711 100%);
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 720px;
+        width: 100%;
+        padding: 40px 25px;
+        border: 1px solid #344966;
+        border-radius: 16px;
+        background: rgba(5, 13, 29, 0.75);
+        box-shadow: 0 0 35px rgba(50, 110, 180, 0.15);
+    }
+
+    .eyebrow {
+        color: #e5bd69;
+        letter-spacing: 5px;
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+
+    h1 {
+        font-size: clamp(32px, 7vw, 54px);
+        margin: 0 0 12px;
+        letter-spacing: 3px;
+    }
+
+    .subtitle {
+        color: #b7c8df;
+        font-size: 18px;
+        margin-bottom: 35px;
+    }
+
+    .countdown {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+
+    .unit {
+        background: #142640;
+        border: 1px solid #314b6b;
+        border-radius: 10px;
+        padding: 18px 5px;
+    }
+
+    .number {
+        display: block;
+        font-size: clamp(30px, 7vw, 52px);
+        font-weight: bold;
+        color: #f2cc7c;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .label {
+        display: block;
+        color: #a9bad0;
+        font-size: 11px;
+        letter-spacing: 2px;
+        margin-top: 8px;
+    }
+
+    .date {
+        margin-top: 30px;
+        color: #e5bd69;
+        font-size: 15px;
+        letter-spacing: 1px;
+    }
+
+    .distance {
+        margin-top: 20px;
+        color: #a9bad0;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .nasa {
+        margin-top: 30px;
+        font-size: 13px;
+    }
+
+    .nasa a {
+        color: #e5bd69;
+        text-decoration: none;
+    }
+
+    .nasa a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 450px) {
+        .countdown {
+            gap: 5px;
+        }
+        .unit {
+            padding: 14px 2px;
+        }
+        .label {
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="eyebrow">NASA VOYAGER MISSION</div>
+
+    <h1>VOYAGER 1</h1>
+
+    <div class="subtitle">
+        One Light-Day from Earth
+    </div>
+
+    <div class="countdown">
+
+        <div class="unit">
+            <span class="number" id="days">--</span>
+            <span class="label">DAYS</span>
+        </div>
+
+        <div class="unit">
+            <span class="number" id="hours">--</span>
+            <span class="label">HOURS</span>
+        </div>
+
+        <div class="unit">
+            <span class="number" id="minutes">--</span>
+            <span class="label">MINUTES</span>
+        </div>
+
+        <div class="unit">
+            <span class="number" id="seconds">--</span>
+            <span class="label">SECONDS</span>
+        </div>
+
+    </div>
+
+    <div class="date" id="status">
+        NOVEMBER 18, 2026 — 5:16 AM EST
+    </div>
+
+    <div class="distance">
+        Approximately 16 billion miles<br>
+        (25.9 billion kilometres) from Earth
+    </div>
+
+    <div class="nasa">
+        <a href="https://science.nasa.gov/mission/voyager/voyager-1/voyager-1-what-is-a-light-day/"
+           target="_blank" rel="noopener">
+            Explore the NASA Voyager mission ↗
+        </a>
+    </div>
+
+</div>
+
+<script>
+    // NASA's published milestone time: November 18, 2026
+    // 5:16:07 AM Eastern Standard Time = 10:16:07 UTC
+
+    const targetDate = new Date("2026-11-18T10:16:07Z").getTime();
+
+    function updateCountdown() {
+
+        const now = Date.now();
+        const difference = targetDate - now;
+
+        if (difference <= 0) {
+            document.getElementById("days").textContent = "00";
+            document.getElementById("hours").textContent = "00";
+            document.getElementById("minutes").textContent = "00";
+            document.getElementById("seconds").textContent = "00";
+            document.getElementById("status").textContent =
+                "VOYAGER 1 HAS REACHED ONE LIGHT-DAY!";
+            return;
+        }
+
+        const days = Math.floor(difference / 86400000);
+        const hours = Math.floor((difference % 86400000) / 3600000);
+        const minutes = Math.floor((difference % 3600000) / 60000);
+        const seconds = Math.floor((difference % 60000) / 1000);
+
+        document.getElementById("days").textContent = days;
+        document.getElementById("hours").textContent =
+            String(hours).padStart(2, "0");
+        document.getElementById("minutes").textContent =
+            String(minutes).padStart(2, "0");
+        document.getElementById("seconds").textContent =
+            String(seconds).padStart(2, "0");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
